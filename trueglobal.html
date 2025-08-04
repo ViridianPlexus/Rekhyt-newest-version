@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Swap Mapael World, USA & Mexico States Maps</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+    }
+    .mapcontainer {
+      width: 900px;
+      height: 600px;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .mapcontainer.active {
+      display: block;
+    }
+    #backBtn {
+      padding: 7px 15px;
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #888;
+      margin-bottom: 20px;
+      background: #fbfbfb;
+      display: none;
+    }
+    #backBtn:active {
+      background: #f3f3f3;
+    }
+  </style>
+</head>
+<body>
+  <button id="backBtn">Back to World Map</button>
+
+  <!-- World Map -->
+  <div class="mapcontainer active" id="world-map-container">
+    <div class="map" id="world-map"></div>
+  </div>
+  <!-- USA States Map -->
+  <div class="mapcontainer" id="usa-map-container">
+    <div class="map" id="usa-map"></div>
+  </div>
+  <!-- Mexico States Map -->
+  <div class="mapcontainer" id="mexico-map-container">
+    <div class="map" id="mexico-map"></div>
+  </div>
+  <!-- Canada Provinces Map -->
+<div class="mapcontainer" id="canada-map-container">
+    <div class="map" id="canada-map"></div>
+  </div>
+    <!-- Russian territories Map -->
+  <div class="mapcontainer" id="russia-map-container">
+    <div class="map" id="russia-map"></div>
+  </div>
+
+  <!-- china territories Map -->
+  <div class="mapcontainer" id="china-map-container">
+    <div class="map" id="china-map"></div>
+  </div>
+  
+  
+  
+
+  <!-- Dependencies -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-mapael@2.2.0/js/jquery.mapael.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-mapael@2.2.0/js/maps/world_countries.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-mapael@2.2.0/js/maps/usa_states.js"></script>
+  <!-- Correct Mexico map script from official Mapael maps repo -->
+  <script src="https://raw.githack.com/neveldo/mapael-maps/master/mexico/mexico.js"></script>
+  <script src="https://raw.githack.com/neveldo/mapael-maps/master/canada/canada.js"></script>
+  <script src="https://raw.githack.com/neveldo/mapael-maps/master/russia/russia.js"></script>
+  <script src="https://raw.githack.com/neveldo/mapael-maps/master/china/china.js"></script>
+
+
+
+  
+
+  <script>
+    $(function() {
+      // Initialize world map
+      $("#world-map-container").mapael({
+        map: {
+          name: "world_countries",
+          defaultArea: {
+            attrs: {
+              fill: "#e4e4e4",
+              stroke: "#666",
+              "stroke-width": 0.5
+            },
+            attrsHover: {
+              fill: "#3388cc"
+            },
+            eventHandlers: {
+              click: function(e, id) {
+                if(id === "US") {
+                  $("#world-map-container").removeClass("active");
+                  $("#usa-map-container").addClass("active");
+                  $("#backBtn").show();
+
+                  if (!$("#usa-map").data('mapael')) {
+                    $("#usa-map-container").mapael({
+                      map: {
+                        name: "usa_states",
+                        defaultArea: {
+                          attrs: {
+                            fill: "#bed7ee",
+                            stroke: "#666",
+                            "stroke-width": 0.5
+                          },
+                          attrsHover: {
+                            fill: "#eb7700"
+                          }
+                        },
+                        zoom: {
+                          enabled: true,
+                          maxLevel: 10
+                        }
+                      }
+                    });
+                  }
+                } else if(id === "MX") {
+                  $("#world-map-container").removeClass("active");
+                  $("#mexico-map-container").addClass("active");
+                  $("#backBtn").show();
+
+                  if (!$("#mexico-map").data('mapael')) {
+                    $("#mexico-map-container").mapael({
+                      map: {
+                        name: "mexico",
+                        defaultArea: {
+                          attrs: {
+                            fill: "#bed7ee",
+                            stroke: "#666",
+                            "stroke-width": 0.5
+                          },
+                          attrsHover: {
+                            fill: "#eb7700"
+                          }
+                        },
+                        zoom: {
+                          enabled: true,
+                          maxLevel: 10
+                        }
+                      }
+                    });
+                    // Fix possible rendering bugs
+                    $(window).trigger('resize');
+                  }
+                }else if(id === "CA") {
+  $("#world-map-container").removeClass("active");
+  $("#canada-map-container").addClass("active");
+  $("#backBtn").show();
+
+  if (!$("#canada-map").data('mapael')) {
+    $("#canada-map-container").mapael({
+      map: {
+        name: "canada",
+        defaultArea: {
+          attrs: {
+            fill: "#bed7ee",
+            stroke: "#666",
+            "stroke-width": 0.5
+          },
+          attrsHover: {
+            fill: "#eb7700"
+          }
+        },
+        zoom: {
+          enabled: true,
+          maxLevel: 10
+        }
+      }
+    });
+    $(window).trigger('resize');
+  }
+}else if(id === "RU") {
+  $("#world-map-container").removeClass("active");
+  $("#russia-map-container").addClass("active");
+  $("#backBtn").show();
+
+  if (!$("#russia-map").data('mapael')) {
+    $("#russia-map-container").mapael({
+      map: {
+        name: "russia",
+        defaultArea: {
+          attrs: {
+            fill: "#bed7ee",
+            stroke: "#666",
+            "stroke-width": 0.5
+          },
+          attrsHover: {
+            fill: "#eb7700"
+          }
+        },
+        zoom: {
+          enabled: true,
+          maxLevel: 10
+        }
+      }
+    });
+    $(window).trigger('resize');
+  }
+}else if(id === "CN") {
+  $("#world-map-container").removeClass("active");
+  $("#china-map-container").addClass("active");
+  $("#backBtn").show();
+
+  if (!$("#china-map").data('mapael')) {
+    $("#china-map-container").mapael({
+      map: {
+        name: "china",
+        defaultArea: {
+          attrs: { fill: "#bed7ee", stroke: "#666", "stroke-width": 0.5 },
+          attrsHover: { fill: "#eb7700" }
+        },
+        zoom: { enabled: true, maxLevel: 10 }
+      }
+    });
+    $(window).trigger('resize');
+  }
+}
+
+
+
+              }
+            }
+          },
+          zoom: {
+            enabled: true,
+            maxLevel: 10
+          }
+        }
+      });
+
+      // Back button functionality
+      $("#backBtn").on("click", function() {
+        $("#usa-map-container, #mexico-map-container, #canada-map-container, #russia-map-container,#china-map-container").removeClass("active");
+        $("#world-map-container").addClass("active");
+        $("#backBtn").hide();
+      });
+    });
+  </script>
+</body>
+</html>
